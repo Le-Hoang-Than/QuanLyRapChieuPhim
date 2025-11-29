@@ -18,4 +18,4 @@ public interface IScheduleRepository extends JpaRepository<Schedule, Integer> {
 
     List<Schedule> getSchedulesByMovie_IdAndBranch_IdAndStartDateAndStartTimeAndRoom_Id(Integer movieId,Integer branchId
     , LocalDate startDate,LocalTime startTime,Integer roomId);
-}
+}//testing
