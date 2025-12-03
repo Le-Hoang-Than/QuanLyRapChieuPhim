@@ -26,7 +26,7 @@ public class SeatService implements ISeatService{
 
     @Override
     public List<SeatDTO> getSeatsByScheduleId(Integer scheduleId) {
-        // Lấy ra các chỗ ngồi của phòng trong lịch đó
+        // Lấy ra các chỗ ngồi của phòng mà trong lịch đó
         Room room = scheduleRepository.getById(scheduleId).getRoom();
         List<Seat> listSeat = seatRepository.getSeatByRoom_Id(room.getId());
 
