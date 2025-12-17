@@ -36,8 +36,19 @@ public class MovieApi {
         return movieService.findAllShowingMoviesByName(name);
     }
 
-    @PostMapping
+    @PostMapping("/update")
     public void updateMovie(@RequestBody Movie movie){
         movieRepository.save(movie);
+    }
+
+    @PostMapping("/add")
+    public void addMovie(@RequestBody Movie movie){
+       
+        movieRepository.save(movie);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteMovie(@PathVariable Integer id){
+        movieRepository.deleteById(id);
     }
 }
