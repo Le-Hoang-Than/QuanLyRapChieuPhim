@@ -34,7 +34,9 @@ public class BillService implements IBillService{
     @Override
     @Transactional
     public void createNewBill(BookingRequestDTO bookingRequestDTO) throws RuntimeException {
-
+        if (bookingRequestDTO.getListSeatIds() == null || bookingRequestDTO.getListSeatIds().isEmpty()) {
+            throw new RuntimeException("Giao dịch thất bại: Bạn chưa chọn ghế nào!");
+        }
         //Lấy ra lịch
         Schedule schedule = scheduleRepository.getById(bookingRequestDTO.getScheduleId());
         //Lấy ra người dùng
