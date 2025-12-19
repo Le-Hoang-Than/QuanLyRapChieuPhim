@@ -7,6 +7,7 @@ import com.example.cinema_back_end.services.IMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,17 +37,20 @@ public class MovieApi {
         return movieService.findAllShowingMoviesByName(name);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
     public void updateMovie(@RequestBody Movie movie){
         movieRepository.save(movie);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     public void addMovie(@RequestBody Movie movie){
        
         movieRepository.save(movie);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public void deleteMovie(@PathVariable Integer id){
         movieRepository.deleteById(id);
