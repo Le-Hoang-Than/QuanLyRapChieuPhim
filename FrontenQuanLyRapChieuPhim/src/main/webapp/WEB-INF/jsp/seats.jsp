@@ -56,7 +56,7 @@
         ${bookedError}
     </p>
     <div class="container">
-        <form action="bill" method="post">
+        <form action="bill" method="post" id="bookingForm">
             <table style="width:100%">
                 <tr>
                     <th></th>
@@ -165,28 +165,27 @@
 </div>
 <jsp:include page="footer.jsp"/>
 <script>
-    // BUG: Vô hiệu hóa việc chọn ghế nhưng vẫn cho phép bấm nút "Tiếp tục"
-    $(document).ready(function() {
-        // Lỗi 1: Khi nhấn vào checkbox, nó sẽ tự động bỏ chọn sau 100ms
-        // Làm người dùng tưởng mình đã chọn nhưng thực tế data gửi đi là rỗng
-        $('.largerCheckbox').on('click', function() {
-            let self = $(this);
-            setTimeout(function() {
-                self.prop('checked', false); // Bỏ comment dòng này để tạo lỗi chọn như không chọn
-                console.log("Bug: Seat selection data corrupted!");
-            }, 100);
-        });
+    // Lấy đối tượng form qua ID
+    const form = document.getElementById('bookingForm');
 
-        // Lỗi 2: Cho phép submit form ngay cả khi chưa chọn ghế nào
-        $('form').on('submit', function(e) {
-            var selectedSeats = $("input[name='seats']:checked").length;
-            if (selectedSeats === 0) {
-                // Thay vì thông báo "Vui lòng chọn ghế", chúng ta cứ để nó submit
-                // Hoặc giả lập một lỗi logic tại đây
-                console.log("Submitting empty seats to backend...");
+    if (form) {
+        form.onsubmit = function(event) {
+            // Tìm tất cả các checkbox có name là 'seats' và đang được tích chọn
+            const selectedSeats = document.querySelectorAll('input[name="seats"]:checked');
+
+            if (selectedSeats.length === 0) {
+                // 1. Hiện thông báo nhắc nhở người dùng
+                alert("LỖI FRONTEND: Bạn chưa chọn ghế nào! Vui lòng chọn vị trí ngồi.");
+
+                // 2. Chặn hành động gửi form (quan trọng nhất để tránh trang trắng)
+                event.preventDefault();
+                return false;
             }
-        });
-    });
+
+            // Nếu có ít nhất 1 ghế, form sẽ được gửi đi bình thường
+            return true;
+        };
+    }
 </script>
 </body>
 
