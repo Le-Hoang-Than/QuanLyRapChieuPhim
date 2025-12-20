@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-CinemaBackEndApplication<cinema_back_end>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.cinema_back_end.CinemaBackEndApplication",
+            "projectName": "cinema_back_end",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
